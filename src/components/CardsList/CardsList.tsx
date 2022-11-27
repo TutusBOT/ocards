@@ -28,50 +28,36 @@ const Transition = React.forwardRef(function Transition(
 
 interface CardsList {
 	set: Set;
-	outsideOpen: boolean;
+	open: boolean;
+	handleClose: () => void;
 }
 
-const CardsList = ({ set, outsideOpen }: CardsList) => {
-	const [open, setOpen] = useState<boolean>(false);
-
-	const handleClose = () => {
-		setOpen(false);
-	};
-
-	const handleClick = () => {
-		setOpen(true);
-	};
-
+const CardsList = ({ set, open, handleClose }: CardsList) => {
 	return (
-		<>
-			<MenuItem onClick={handleClick}>
-				<AddCircleOutlineIcon />
-			</MenuItem>
-			<Dialog
-				fullScreen
-				open={open}
-				onClose={handleClose}
-				TransitionComponent={Transition}
-			>
-				<AppBar className="relative">
-					<Toolbar className="justify-between">
-						<IconButton onClick={handleClose}>
-							<CloseIcon />
-						</IconButton>
-						<AddCards />
-					</Toolbar>
-				</AppBar>
-				<Grid container spacing={2}>
-					{set.cards.map((card) => {
-						return (
-							<Grid xs={12} md={6}>
-								<CardPreview card={card} />
-							</Grid>
-						);
-					})}
-				</Grid>
-			</Dialog>
-		</>
+		<Dialog
+			fullScreen
+			open={open}
+			onClose={handleClose}
+			TransitionComponent={Transition}
+		>
+			<AppBar className="relative">
+				<Toolbar className="justify-between">
+					<IconButton onClick={handleClose}>
+						<CloseIcon />
+					</IconButton>
+					<AddCards setName={set.name} />
+				</Toolbar>
+			</AppBar>
+			<Grid container spacing={2}>
+				{set.cards.map((card) => {
+					return (
+						<Grid xs={12} md={6}>
+							<CardPreview card={card} />
+						</Grid>
+					);
+				})}
+			</Grid>
+		</Dialog>
 	);
 };
 export default CardsList;

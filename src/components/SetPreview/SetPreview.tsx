@@ -21,11 +21,7 @@ const SetPreview = ({ set }: { set: Set }) => {
 	const dispatch = useDispatch();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
-	const [openAdd, setOpenAdd] = useState(false);
-
-	useEffect(() => {
-		console.log(openAdd, "test");
-	}, [openAdd]);
+	const [openCardsList, setOpenCardsList] = useState(false);
 
 	const handleMenuClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(e.currentTarget);
@@ -48,23 +44,29 @@ const SetPreview = ({ set }: { set: Set }) => {
 		handleMenuClose();
 	};
 
-	const handleAddClick = () => {
-		setOpenAdd(true);
+	const handleCardsListClick = () => {
+		setOpenCardsList(true);
 	};
 
-	const handleAddClose = () => {
-		setOpenAdd(false);
+	const handleCardsListClose = () => {
+		setOpenCardsList(false);
 	};
 
 	return (
-		<ListItem className="flex flex-col">
+		<ListItem className="flex-col">
+			<div
+				className="absolute h-full w-full cursor-pointer"
+				onClick={handleCardsListClick}
+			></div>
 			<ListItemText>
 				{set.name}
 				<IconButton onClick={handleMenuClick}>
 					<MoreVertIcon />
 				</IconButton>
 				<Menu anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
-					<CardsList set={set} outsideOpen={openAdd} />
+					<MenuItem onClick={handleCardsListClick}>
+						<AddCircleOutlineIcon />
+					</MenuItem>
 					<MenuItem onClick={handleEdit}>
 						<EditIcon />
 					</MenuItem>
@@ -78,11 +80,12 @@ const SetPreview = ({ set }: { set: Set }) => {
 			</ListItemText>
 			<ListItemText>{set.cards.length} cards in set</ListItemText>
 			<ListItemButton>PRACTICE</ListItemButton>
-			<Paper
-				className="absolute"
-				elevation={24}
-				sx={{ width: "100%", height: "100%", zIndex: "-1" }}
+			<CardsList
+				set={set}
+				open={openCardsList}
+				handleClose={handleCardsListClose}
 			/>
+			<Paper className="absolute h-full w-full z-[-1]" elevation={24} />
 		</ListItem>
 	);
 };
