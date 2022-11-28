@@ -54,6 +54,23 @@ const slice = createSlice({
 				return set;
 			});
 		},
+		deleteCard: (
+			state,
+			{ payload }: PayloadAction<{ card: FlashCard; name: string }>
+		) => {
+			state.sets.forEach((set, i) => {
+				if (set.name === payload.name) {
+					state.sets[i].cards = state.sets[i].cards.filter((card) => {
+						if (
+							card.back !== payload.card.back ||
+							card.front !== payload.card.front
+						) {
+							return card;
+						}
+					});
+				}
+			});
+		},
 		reset: () => {
 			return initialState;
 		},
@@ -67,6 +84,9 @@ export const cardsActions = {
 		name: string;
 		cards: Array<FlashCard>;
 	}>("cards/addCards"),
+	deleteCard: createAction<{ card: FlashCard; name: string }>(
+		"cards/deleteCard"
+	),
 	reset: createAction("cards/reset"),
 };
 

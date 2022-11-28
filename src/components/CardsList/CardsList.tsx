@@ -51,8 +51,8 @@ const CardsList = ({ set, open, handleClose }: CardsList) => {
 			<Grid container spacing={2}>
 				{set.cards.map((card) => {
 					return (
-						<Grid xs={12} md={6}>
-							<CardPreview card={card} />
+						<Grid item xs={12} sm={6} md={4}>
+							<CardPreview card={card} setName={set.name} />
 						</Grid>
 					);
 				})}
