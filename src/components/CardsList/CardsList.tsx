@@ -15,7 +15,7 @@ import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { Set } from "../../redux/cards/cardsSlice";
-import { AddCards, CardPreview } from "../index";
+import { AddCards, CardPreview, SearchBar } from "../index";
 
 const Transition = React.forwardRef(function Transition(
 	props: TransitionProps & {
@@ -33,6 +33,9 @@ interface CardsList {
 }
 
 const CardsList = ({ set, open, handleClose }: CardsList) => {
+	const test = (a: Array<Object>) => {
+		console.log(a);
+	};
 	return (
 		<Dialog
 			fullScreen
@@ -45,6 +48,7 @@ const CardsList = ({ set, open, handleClose }: CardsList) => {
 					<IconButton onClick={handleClose}>
 						<CloseIcon />
 					</IconButton>
+					<SearchBar data={set.cards} setFilteredData={test} />
 					<AddCards setName={set.name} />
 				</Toolbar>
 			</AppBar>
