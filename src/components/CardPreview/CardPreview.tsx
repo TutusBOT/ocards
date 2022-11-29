@@ -40,10 +40,14 @@ const CardPreview = ({ card, setName }: CardPreview) => {
 	return (
 		<Card>
 			<CardContent>
-				<Typography variant="h5">{card.front}</Typography>
-				<IconButton onClick={handleMenuClick}>
-					<MoreVertIcon />
-				</IconButton>
+				<div className="flex justify-between align-middle">
+					<Typography variant="h5" className=" overflow-hidden text-ellipsis">
+						{card.front}
+					</Typography>
+					<IconButton onClick={handleMenuClick}>
+						<MoreVertIcon />
+					</IconButton>
+				</div>
 				<Menu open={open} anchorEl={anchorEl} onClose={handleMenuClose}>
 					<MenuItem>
 						<EditIcon />
@@ -52,7 +56,9 @@ const CardPreview = ({ card, setName }: CardPreview) => {
 						<DeleteIcon />
 					</MenuItem>
 				</Menu>
-				<Typography>{card.back}</Typography>
+				<Typography variant="body1" className="overflow-hidden text-ellipsis">
+					{card.back}
+				</Typography>
 			</CardContent>
 		</Card>
 	);

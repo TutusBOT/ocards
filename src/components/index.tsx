@@ -4,5 +4,14 @@ import SetPreview from "./SetPreview/SetPreview";
 import CardsList from "./CardsList/CardsList";
 import CardPreview from "./CardPreview/CardPreview";
 import AddCards from "./AddCards/AddCards";
+import SearchBar from "./SearchBar/SearchBar";
 
-export { CreateSet, SetList, SetPreview, CardsList, CardPreview, AddCards };
+export {
+	CreateSet,
+	SetList,
+	SetPreview,
+	CardsList,
+	CardPreview,
+	AddCards,
+	SearchBar,
+};
