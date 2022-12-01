@@ -14,7 +14,7 @@ import { TransitionProps } from "@mui/material/transitions";
 import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { Set } from "../../redux/cards/cardsSlice";
+import { FlashCard, Set } from "../../redux/cards/cardsSlice";
 import { AddCards, CardPreview, SearchBar } from "../index";
 
 const Transition = React.forwardRef(function Transition(
@@ -33,9 +33,12 @@ interface CardsList {
 }
 
 const CardsList = ({ set, open, handleClose }: CardsList) => {
-	const test = (a: Array<Object>) => {
-		console.log(a);
+	const [filteredCards, setFilteredCards] = useState(set.cards);
+
+	const handleFilter = (cards: FlashCard[]) => {
+		setFilteredCards(cards);
 	};
+
 	return (
 		<Dialog
 			fullScreen
@@ -48,14 +51,14 @@ const CardsList = ({ set, open, handleClose }: CardsList) => {
 					<IconButton onClick={handleClose}>
 						<CloseIcon />
 					</IconButton>
-					<SearchBar data={set.cards} setFilteredData={test} />
+					<SearchBar data={set.cards} setFilteredData={handleFilter} />
 					<AddCards setName={set.name} />
 				</Toolbar>
 			</AppBar>
 			<Grid container spacing={2}>
-				{set.cards.map((card) => {
+				{filteredCards.map((card, i) => {
 					return (
-						<Grid item xs={12} sm={6} md={4}>
+						<Grid item xs={12} sm={6} md={4} key={i}>
 							<CardPreview card={card} setName={set.name} />
 						</Grid>
 					);

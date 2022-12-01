@@ -1,30 +1,34 @@
 import { Input } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface SearchBar {
-	data: Array<any>;
+	data: Array<Object>;
 	setFilteredData: (filteredArray: Array<any>) => void;
 }
 
 const SearchBar = ({ data, setFilteredData }: SearchBar) => {
 	const [value, setValue] = useState("");
 	useEffect(() => {
-		setFilteredData(
-			data.filter((el) => {
-				Object.values(el).forEach((elValue) => {
-					if (elValue === value) {
-						return el;
-					}
-				});
-			})
-		);
-	}, [data]);
+		const filteredArray = data.filter((el) => {
+			return Object.values(el).reduce((elValue: string) => {
+				if (elValue.startsWith(value)) {
+					return el;
+				}
+			});
+		});
+		setFilteredData(filteredArray);
+	}, [value]);
+	const handleChange = (
+		val: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+	) => {
+		setValue(val.target.value);
+	};
 
 	return (
 		<Input
 			value={value}
-			onChange={(e) => setValue(e.target.value)}
+			onChange={handleChange}
 			startAdornment={<SearchIcon />}
 		/>
 	);
