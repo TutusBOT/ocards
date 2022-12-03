@@ -15,7 +15,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
-import { CardsList } from "../index";
+import { CardsList, Practice } from "../index";
 
 const SetPreview = ({ set }: { set: Set }) => {
 	const dispatch = useDispatch();
@@ -79,7 +79,7 @@ const SetPreview = ({ set }: { set: Set }) => {
 				</Menu>
 			</ListItemText>
 			<ListItemText>{set.cards.length} cards in set</ListItemText>
-			<ListItemButton>PRACTICE</ListItemButton>
+			<Practice setName={set.name} />
 			<CardsList
 				set={set}
 				open={openCardsList}

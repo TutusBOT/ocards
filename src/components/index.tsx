@@ -5,6 +5,7 @@ import CardsList from "./CardsList/CardsList";
 import CardPreview from "./CardPreview/CardPreview";
 import AddCards from "./AddCards/AddCards";
 import SearchBar from "./CardsSearchBar/CardsSearchBar";
+import Practice from "./Practice/Practice";
 
 export {
 	CreateSet,
@@ -14,4 +15,5 @@ export {
 	CardPreview,
 	AddCards,
 	SearchBar,
+	Practice,
 };
