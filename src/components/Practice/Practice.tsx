@@ -14,7 +14,6 @@ import {
 import { TransitionProps } from "@mui/material/transitions";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { FlashCard, Set } from "../../redux/cards/cardsSlice";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -39,30 +38,33 @@ const Practice = ({ setName }: Practice) => {
 	const [showAnswer, setShowAnswer] = useState(false);
 	const [answer, setAnswer] = useState("");
 	const [isAnswered, setIsAnswered] = useState(false);
-	const [isAnswerCorrect, setIsAnswerCorrect] = useState<null | boolean>(null);
+	const [isAnswerCorrect, setIsAnswerCorrect] = useState(false);
 	const [set] = useSelector((state: RootState) =>
 		state.persistedReducer.cards.sets.filter((set) => set.name === setName)
 	);
-	const reviewSet = useSelector(
-		(state: RootState) => state.persistedReducer.practice.cards
+	const { cards: reviewSet, name: reviewSetName } = useSelector(
+		(state: RootState) => state.persistedReducer.practice
 	);
 
 	useEffect(() => {
-		if (!reviewSet.length) {
+		if ((reviewSetName !== setName || reviewSet.length < 1) && open) {
+			dispatch(practiceActions.setName(setName));
 			dispatch(
 				practiceActions.setPractice(
 					set.cards.sort((a, b) => 0.5 - Math.random())
 				)
 			);
 		}
-	}, []);
+	}, [open]);
 
 	const handleClose = () => {
 		setOpen(false);
 	};
 
 	const handleOpen = () => {
-		setOpen(true);
+		if (set.cards.length) {
+			setOpen(true);
+		}
 	};
 
 	const handleShowAnswer = () => {
@@ -80,15 +82,18 @@ const Practice = ({ setName }: Practice) => {
 	};
 
 	const handleSetAsCorrect = () => {
-		setIsAnswerCorrect(true);
+		setIsAnswerCorrect(!isAnswerCorrect);
 	};
 
 	const handleNextAnswer = () => {
+		if (reviewSet.length === 1) {
+			dispatch(practiceActions.setName(""));
+		}
 		dispatch(practiceActions.setPractice(reviewSet.slice(1)));
 		setIsAnswered(false);
 		setAnswer("");
 		setShowAnswer(false);
-		setIsAnswerCorrect(null);
+		setIsAnswerCorrect(false);
 	};
 
 	return (
@@ -117,7 +122,7 @@ const Practice = ({ setName }: Practice) => {
 					>
 						<Grid item sm={12}>
 							<Typography variant="h4" align="center">
-								{reviewSet[0].front}
+								{reviewSet.length ? reviewSet[0].front : null}
 							</Typography>
 						</Grid>
 						<Grid
@@ -125,7 +130,9 @@ const Practice = ({ setName }: Practice) => {
 							sm={12}
 							className={!showAnswer ? "opacity-0 select-none" : ""}
 						>
-							<Typography align="center">{reviewSet[0].back}</Typography>
+							<Typography align="center">
+								{reviewSet.length ? reviewSet[0].back : null}
+							</Typography>
 						</Grid>
 						<Grid item sm={12}>
 							<TextField
@@ -134,7 +141,7 @@ const Practice = ({ setName }: Practice) => {
 								onChange={(e) => setAnswer(e.target.value)}
 								focused={isAnswered}
 								color={
-									isAnswerCorrect !== null
+									isAnswered
 										? isAnswerCorrect
 											? "success"
 											: "error"
@@ -155,7 +162,7 @@ const Practice = ({ setName }: Practice) => {
 							) : (
 								<>
 									<Button variant="outlined" onClick={handleSetAsCorrect}>
-										SET AS CORRECT
+										{isAnswerCorrect ? "SET AS INCORRECT" : "SET AS CORRECT"}
 									</Button>
 									<Button variant="contained" onClick={handleNextAnswer}>
 										NEXT
