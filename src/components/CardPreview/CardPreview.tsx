@@ -37,6 +37,16 @@ const CardPreview = ({ card, setName }: CardPreview) => {
 		handleMenuClose();
 	};
 
+	const handleEdit = () => {
+		dispatch(
+			cardsActions.editCard({
+				name: setName,
+				card: card,
+				editedCard: { front: "edytowane", back: "również", learnedRatio: 0 },
+			})
+		);
+	};
+
 	return (
 		<Card>
 			<CardContent>
@@ -49,7 +59,7 @@ const CardPreview = ({ card, setName }: CardPreview) => {
 					</IconButton>
 				</div>
 				<Menu open={open} anchorEl={anchorEl} onClose={handleMenuClose}>
-					<MenuItem>
+					<MenuItem onClick={handleEdit}>
 						<EditIcon />
 					</MenuItem>
 					<MenuItem onClick={handleDelete}>

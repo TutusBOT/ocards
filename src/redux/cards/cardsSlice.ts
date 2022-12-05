@@ -10,6 +10,7 @@ export interface Set {
 export interface FlashCard {
 	front: string;
 	back: string;
+	learnedRatio: number;
 }
 
 type CardsState = {
@@ -71,6 +72,28 @@ const slice = createSlice({
 				}
 			});
 		},
+		editCard: (
+			state,
+			{
+				payload,
+			}: PayloadAction<{ name: string; card: FlashCard; editedCard: FlashCard }>
+		) => {
+			state.sets = state.sets.map((set, i) => {
+				if (set.name === payload.name) {
+					const cards = set.cards.map((card) => {
+						if (
+							card.back === payload.card.back &&
+							card.front === payload.card.front
+						) {
+							return payload.editedCard;
+						}
+						return card;
+					});
+					return { ...set, cards };
+				}
+				return set;
+			});
+		},
 		reset: () => {
 			return initialState;
 		},
@@ -87,6 +110,11 @@ export const cardsActions = {
 	deleteCard: createAction<{ card: FlashCard; name: string }>(
 		"cards/deleteCard"
 	),
+	editCard: createAction<{
+		name: string;
+		card: FlashCard;
+		editedCard: FlashCard;
+	}>("cards/addCard"),
 	reset: createAction("cards/reset"),
 };
 

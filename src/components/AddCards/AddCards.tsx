@@ -25,7 +25,7 @@ const AddCards = ({ setName }: AddCards) => {
 		dispatch(
 			cardsActions.addCards({
 				name: setName,
-				cards: [{ front: term, back: definition }],
+				cards: [{ front: term, back: definition, learnedRatio: 0 }],
 			})
 		);
 		setTerm("");
