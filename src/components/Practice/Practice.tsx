@@ -48,12 +48,11 @@ const Practice = ({ setName }: Practice) => {
 
 	useEffect(() => {
 		if ((reviewSetName !== setName || reviewSet.length < 1) && open) {
-			dispatch(practiceActions.setName(setName));
-			dispatch(
-				practiceActions.setPractice(
-					set.cards.sort((a, b) => 0.5 - Math.random())
-				)
+			const randomizedCards = [...set.cards].sort(
+				(a, b) => 0.5 - Math.random()
 			);
+			dispatch(practiceActions.setName(setName));
+			dispatch(practiceActions.setPractice(randomizedCards));
 		}
 	}, [open]);
 
@@ -86,14 +85,15 @@ const Practice = ({ setName }: Practice) => {
 	};
 
 	const handleNextAnswer = () => {
-		if (reviewSet.length === 1) {
-			dispatch(practiceActions.setName(""));
-		}
 		dispatch(practiceActions.setPractice(reviewSet.slice(1)));
 		setIsAnswered(false);
 		setAnswer("");
 		setShowAnswer(false);
 		setIsAnswerCorrect(false);
+		if (reviewSet.length === 1) {
+			dispatch(practiceActions.setName(""));
+			setOpen(false);
+		}
 	};
 
 	return (
@@ -121,7 +121,7 @@ const Practice = ({ setName }: Practice) => {
 						alignContent="center"
 					>
 						<Grid item sm={12}>
-							<Typography variant="h4" align="center">
+							<Typography variant="h4" align="center" className=" break-all">
 								{reviewSet.length ? reviewSet[0].front : null}
 							</Typography>
 						</Grid>
@@ -130,7 +130,7 @@ const Practice = ({ setName }: Practice) => {
 							sm={12}
 							className={!showAnswer ? "opacity-0 select-none" : ""}
 						>
-							<Typography align="center">
+							<Typography align="center" className="break-all">
 								{reviewSet.length ? reviewSet[0].back : null}
 							</Typography>
 						</Grid>
