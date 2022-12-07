@@ -102,7 +102,7 @@ const slice = createSlice({
 
 export const cardsActions = {
 	addSet: createAction<Set>("cards/addSet"),
-	deleteSet: createAction<String>("cards/deleteSet"),
+	deleteSet: createAction<string>("cards/deleteSet"),
 	addCards: createAction<{
 		name: string;
 		cards: Array<FlashCard>;

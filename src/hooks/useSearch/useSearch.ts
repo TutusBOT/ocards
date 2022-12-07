@@ -5,14 +5,14 @@ const useSearch = (
 ) => {
 	return array.filter((el) => {
 		const keys = Object.keys(el).filter((key) => {
-			for (let excludedKey of excludedKeys) {
+			for (const excludedKey of excludedKeys) {
 				if (excludedKey === key) {
 					return false;
 				}
 			}
 			return true;
 		});
-		for (let key of keys) {
+		for (const key of keys) {
 			if (el[key].toString().toLowerCase().startsWith(value.toLowerCase())) {
 				return el;
 			}
