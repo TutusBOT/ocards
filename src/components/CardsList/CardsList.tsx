@@ -16,6 +16,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { FlashCard, Set } from "../../redux/cards/cardsSlice";
 import { AddCards, CardPreview, SearchBar } from "../index";
+import { shallowEqual, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const Transition = React.forwardRef(function Transition(
 	props: TransitionProps & {
@@ -27,12 +29,19 @@ const Transition = React.forwardRef(function Transition(
 });
 
 interface CardsList {
-	set: Set;
+	setName: string;
 	open: boolean;
 	handleClose: () => void;
 }
 
-const CardsList = ({ set, open, handleClose }: CardsList) => {
+const CardsList = ({ setName, open, handleClose }: CardsList) => {
+	const set = useSelector(
+		(state: RootState) =>
+			state.persistedReducer.cards.sets.filter(
+				(set) => set.name === setName
+			)[0],
+		shallowEqual
+	);
 	const [filteredCards, setFilteredCards] = useState(set.cards);
 
 	const handleFilter = (cards: FlashCard[]) => {

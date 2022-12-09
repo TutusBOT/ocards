@@ -81,7 +81,7 @@ const SetPreview = ({ set }: { set: Set }) => {
 			<ListItemText>{set.cards.length} cards in set</ListItemText>
 			<Practice setName={set.name} />
 			<CardsList
-				set={set}
+				setName={set.name}
 				open={openCardsList}
 				handleClose={handleCardsListClose}
 			/>

@@ -33,11 +33,10 @@ const slice = createSlice({
 	initialState,
 	reducers: {
 		addSet: (state, { payload }: PayloadAction<Set>) => {
-			state.sets.push(payload);
-			return state;
+			return { sets: [...state.sets, payload] };
 		},
 		deleteSet: (state, { payload }: PayloadAction<string>) => {
-			state.sets = state.sets.filter((set) => set.name !== payload);
+			return { sets: state.sets.filter((set) => set.name !== payload) };
 		},
 		addCards: (
 			state,
@@ -78,21 +77,24 @@ const slice = createSlice({
 				payload,
 			}: PayloadAction<{ name: string; card: FlashCard; editedCard: FlashCard }>
 		) => {
-			state.sets = state.sets.map((set, i) => {
-				if (set.name === payload.name) {
-					const cards = set.cards.map((card) => {
-						if (
-							card.back === payload.card.back &&
-							card.front === payload.card.front
-						) {
-							return payload.editedCard;
-						}
-						return card;
-					});
-					return { ...set, cards };
-				}
-				return set;
-			});
+			return {
+				...state,
+				sets: state.sets.map((set) => {
+					if (set.name === payload.name) {
+						const cards = set.cards.map((card) => {
+							if (
+								card.back === payload.card.back &&
+								card.front === payload.card.front
+							) {
+								return payload.editedCard;
+							}
+							return card;
+						});
+						return { ...set, cards };
+					}
+					return set;
+				}),
+			};
 		},
 		reset: () => {
 			return initialState;
@@ -114,7 +116,7 @@ export const cardsActions = {
 		name: string;
 		card: FlashCard;
 		editedCard: FlashCard;
-	}>("cards/addCard"),
+	}>("cards/editCard"),
 	reset: createAction("cards/reset"),
 };
 
