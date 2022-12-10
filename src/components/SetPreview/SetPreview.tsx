@@ -1,7 +1,6 @@
 import {
 	IconButton,
 	ListItem,
-	ListItemButton,
 	ListItemText,
 	Menu,
 	MenuItem,
@@ -14,8 +13,9 @@ import ImportExportIcon from "@mui/icons-material/ImportExport";
 import EditIcon from "@mui/icons-material/Edit";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useDispatch } from "react-redux";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CardsList, Practice } from "../index";
+import Typography from "@mui/material/Typography";
 
 const SetPreview = ({ set }: { set: Set }) => {
 	const dispatch = useDispatch();
@@ -59,7 +59,7 @@ const SetPreview = ({ set }: { set: Set }) => {
 				onClick={handleCardsListClick}
 			></div>
 			<ListItemText>
-				{set.name}
+				<Typography variant="body1">{set.name}</Typography>
 				<IconButton onClick={handleMenuClick}>
 					<MoreVertIcon />
 				</IconButton>
