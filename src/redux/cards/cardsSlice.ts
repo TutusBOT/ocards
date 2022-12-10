@@ -47,29 +47,37 @@ const slice = createSlice({
 				cards: Array<FlashCard>;
 			}>
 		) => {
-			state.sets.map((set) => {
-				if (set.name === payload.name) {
-					set.cards = [...set.cards, ...payload.cards];
-				}
-				return set;
-			});
+			return {
+				sets: state.sets.map((set) => {
+					if (set.name === payload.name) {
+						return { ...set, cards: [...set.cards, ...payload.cards] };
+					}
+					return set;
+				}),
+			};
 		},
 		deleteCard: (
 			state,
 			{ payload }: PayloadAction<{ card: FlashCard; name: string }>
 		) => {
-			state.sets.forEach((set, i) => {
-				if (set.name === payload.name) {
-					state.sets[i].cards = state.sets[i].cards.filter((card) => {
-						if (
-							card.back !== payload.card.back ||
-							card.front !== payload.card.front
-						) {
-							return card;
-						}
-					});
-				}
-			});
+			return {
+				sets: state.sets.map((set) => {
+					if (set.name === payload.name) {
+						return {
+							...set,
+							cards: set.cards.filter((card) => {
+								if (
+									card.back !== payload.card.back ||
+									card.front !== payload.card.front
+								) {
+									return card;
+								}
+							}),
+						};
+					}
+					return set;
+				}),
+			};
 		},
 		editCard: (
 			state,
