@@ -1,22 +1,17 @@
 import {
 	AppBar,
-	Button,
 	Dialog,
 	Grid,
-	Icon,
 	IconButton,
-	List,
-	MenuItem,
 	Slide,
 	Toolbar,
 } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { FlashCard, Set } from "../../redux/cards/cardsSlice";
+import { FlashCard } from "../../redux/cards/cardsSlice";
 import { AddCards, CardPreview, SearchBar } from "../index";
-import { shallowEqual, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
 const Transition = React.forwardRef(function Transition(

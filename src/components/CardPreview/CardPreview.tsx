@@ -11,8 +11,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { cardsActions, FlashCard } from "../../redux/cards/cardsSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { useDispatch } from "react-redux";
 
 interface CardPreview {
 	card: FlashCard;
