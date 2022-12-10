@@ -5,7 +5,6 @@ import {
 	Dialog,
 	Grid,
 	IconButton,
-	Input,
 	Slide,
 	TextField,
 	Toolbar,
@@ -48,9 +47,7 @@ const Practice = ({ setName }: Practice) => {
 
 	useEffect(() => {
 		if ((reviewSetName !== setName || reviewSet.length < 1) && open) {
-			const randomizedCards = [...set.cards].sort(
-				(a, b) => 0.5 - Math.random()
-			);
+			const randomizedCards = [...set.cards].sort(() => 0.5 - Math.random());
 			dispatch(practiceActions.setName(setName));
 			dispatch(practiceActions.setPractice(randomizedCards));
 		}
