@@ -35,18 +35,18 @@ interface CardsList {
 }
 
 const CardsList = ({ setName, open, handleClose }: CardsList) => {
-	const set = useSelector(
-		(state: RootState) =>
-			state.persistedReducer.cards.sets.filter(
-				(set) => set.name === setName
-			)[0],
-		shallowEqual
+	const [set] = useSelector((state: RootState) =>
+		state.persistedReducer.cards.sets.filter((set) => set.name === setName)
 	);
-	const [filteredCards, setFilteredCards] = useState(set.cards);
+	const [filteredCards, setFilteredCards] = useState<FlashCard[]>([]);
 
 	const handleFilter = (cards: FlashCard[]) => {
 		setFilteredCards(cards);
 	};
+
+	useEffect(() => {
+		setFilteredCards(set.cards);
+	}, [set]);
 
 	return (
 		<Dialog
