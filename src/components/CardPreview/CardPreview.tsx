@@ -57,7 +57,12 @@ const CardPreview = ({ card, setName }: CardPreview) => {
 						<MoreVertIcon />
 					</IconButton>
 				</div>
-				<Menu open={open} anchorEl={anchorEl} onClose={handleMenuClose}>
+				<Menu
+					open={open}
+					anchorEl={anchorEl}
+					onClose={handleMenuClose}
+					className="-ml-2"
+				>
 					<MenuItem onClick={handleEdit}>
 						<EditIcon />
 					</MenuItem>

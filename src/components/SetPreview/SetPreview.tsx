@@ -58,25 +58,32 @@ const SetPreview = ({ set }: { set: Set }) => {
 				className="absolute h-full w-full cursor-pointer"
 				onClick={handleCardsListClick}
 			></div>
-			<ListItemText>
-				<Typography variant="body1">{set.name}</Typography>
-				<IconButton onClick={handleMenuClick}>
-					<MoreVertIcon />
-				</IconButton>
-				<Menu anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
-					<MenuItem onClick={handleCardsListClick}>
-						<AddCircleOutlineIcon />
-					</MenuItem>
-					<MenuItem onClick={handleEdit}>
-						<EditIcon />
-					</MenuItem>
-					<MenuItem onClick={handleExport}>
-						<ImportExportIcon />
-					</MenuItem>
-					<MenuItem onClick={handleDelete}>
-						<DeleteIcon />
-					</MenuItem>
-				</Menu>
+			<ListItemText className="w-full">
+				<div className="flex justify-between items-center w-full">
+					<Typography variant="h5">{set.name}</Typography>
+					<IconButton onClick={handleMenuClick}>
+						<MoreVertIcon />
+					</IconButton>
+					<Menu
+						anchorEl={anchorEl}
+						open={open}
+						onClose={handleMenuClose}
+						className="-ml-2"
+					>
+						<MenuItem onClick={handleCardsListClick}>
+							<AddCircleOutlineIcon />
+						</MenuItem>
+						<MenuItem onClick={handleEdit}>
+							<EditIcon />
+						</MenuItem>
+						<MenuItem onClick={handleExport}>
+							<ImportExportIcon />
+						</MenuItem>
+						<MenuItem onClick={handleDelete}>
+							<DeleteIcon />
+						</MenuItem>
+					</Menu>
+				</div>
 			</ListItemText>
 			<ListItemText>{set.cards.length} cards in set</ListItemText>
 			<Practice setName={set.name} />

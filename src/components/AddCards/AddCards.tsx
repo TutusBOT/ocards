@@ -1,5 +1,5 @@
 import { Button, Dialog, TextField } from "@mui/material";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { cardsActions } from "../../redux/cards/cardsSlice";
 
@@ -12,6 +12,7 @@ const AddCards = ({ setName }: AddCards) => {
 	const [term, setTerm] = useState("");
 	const [definition, setDefinition] = useState("");
 	const dispatch = useDispatch();
+	const addCardRef = useRef<HTMLInputElement>(null);
 
 	const handleClick = () => {
 		setOpen(true);
@@ -30,6 +31,7 @@ const AddCards = ({ setName }: AddCards) => {
 		);
 		setTerm("");
 		setDefinition("");
+		if (addCardRef.current) addCardRef.current.focus();
 	};
 
 	return (
@@ -44,6 +46,7 @@ const AddCards = ({ setName }: AddCards) => {
 						variant="outlined"
 						value={term}
 						onChange={(e) => setTerm(e.target.value)}
+						inputRef={addCardRef}
 					/>
 					<TextField
 						label="Definition (back)"
