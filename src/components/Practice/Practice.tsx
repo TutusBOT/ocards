@@ -103,7 +103,7 @@ const Practice = ({ setName }: Practice) => {
 				onClose={handleClose}
 			>
 				<AppBar className="relative">
-					<Toolbar>
+					<Toolbar className="justify-end">
 						<IconButton onClick={handleClose}>
 							<CloseIcon />
 						</IconButton>

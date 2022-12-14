@@ -52,11 +52,11 @@ const CardsList = ({ setName, open, handleClose }: CardsList) => {
 		>
 			<AppBar className="relative">
 				<Toolbar className="justify-between">
+					<AddCards setName={set.name} />
+					<SearchBar data={set.cards} setFilteredData={handleFilter} />
 					<IconButton onClick={handleClose}>
 						<CloseIcon />
 					</IconButton>
-					<SearchBar data={set.cards} setFilteredData={handleFilter} />
-					<AddCards setName={set.name} />
 				</Toolbar>
 			</AppBar>
 			<Grid container spacing={2}>
