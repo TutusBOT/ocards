@@ -6,6 +6,7 @@ import CardPreview from "./CardPreview/CardPreview";
 import AddCards from "./AddCards/AddCards";
 import SearchBar from "./CardsSearchBar/CardsSearchBar";
 import Practice from "./Practice/Practice";
+import ImportExportDialog from "./ImportExportDialog/ImportExportDialog";
 
 export {
 	CreateSet,
@@ -16,4 +17,5 @@ export {
 	AddCards,
 	SearchBar,
 	Practice,
+	ImportExportDialog,
 };
