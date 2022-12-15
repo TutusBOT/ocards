@@ -1,14 +1,10 @@
 import {
-	AppBar,
-	Button,
-	Dialog,
 	IconButton,
 	ListItem,
 	ListItemText,
 	Menu,
 	MenuItem,
 	Paper,
-	Toolbar,
 } from "@mui/material";
 import { cardsActions, Set } from "../../redux/cards/cardsSlice";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -16,11 +12,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
 import EditIcon from "@mui/icons-material/Edit";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import PublishIcon from "@mui/icons-material/Publish";
 import { useDispatch } from "react-redux";
 import React, { useState } from "react";
-import { CardsList, Practice } from "../index";
+import { CardsList, ImportExportDialog, Practice } from "../index";
 import Typography from "@mui/material/Typography";
-import CloseIcon from "@mui/icons-material/Close";
 
 const SetPreview = ({ set }: { set: Set }) => {
 	const dispatch = useDispatch();
@@ -29,6 +25,7 @@ const SetPreview = ({ set }: { set: Set }) => {
 	const [openCardsList, setOpenCardsList] = useState(false);
 	const [openExport, setOpenExport] = useState(false);
 	const [exportedCards, setExportedCards] = useState<string[]>([]);
+	const [openImport, setOpenImport] = useState(false);
 
 	const handleMenuClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(e.currentTarget);
@@ -43,8 +40,16 @@ const SetPreview = ({ set }: { set: Set }) => {
 		dispatch(cardsActions.deleteSet(set.name));
 	};
 
+	const handleImportOpen = () => {
+		setOpenImport(true);
+	};
+
+	const handleImportClose = () => {
+		setOpenImport(false);
+	};
+
 	const handleExportOpen = () => {
-		let exportedCards = set.cards.map((card) => {
+		const exportedCards = set.cards.map((card) => {
 			return `${card.front},${card.back}`;
 		});
 		setExportedCards(exportedCards);
@@ -54,10 +59,6 @@ const SetPreview = ({ set }: { set: Set }) => {
 	const handleExportClose = () => {
 		setOpenExport(false);
 		handleMenuClose();
-	};
-
-	const handleExportCopy = () => {
-		navigator.clipboard.writeText(exportedCards.join("\n"));
 	};
 
 	const handleEdit = () => {
@@ -90,17 +91,25 @@ const SetPreview = ({ set }: { set: Set }) => {
 						onClose={handleMenuClose}
 						className="-ml-2"
 					>
-						<MenuItem onClick={handleCardsListClick}>
+						<MenuItem onClick={handleCardsListClick} className="gap-1">
 							<AddCircleOutlineIcon />
+							<Typography>Add</Typography>
 						</MenuItem>
-						<MenuItem onClick={handleEdit}>
+						<MenuItem onClick={handleEdit} className="gap-1">
 							<EditIcon />
+							<Typography>Edit</Typography>
 						</MenuItem>
-						<MenuItem onClick={handleExportOpen}>
+						<MenuItem onClick={handleImportOpen} className="gap-1">
+							<PublishIcon />
+							<Typography>Import</Typography>
+						</MenuItem>
+						<MenuItem onClick={handleExportOpen} className="gap-1">
 							<ImportExportIcon />
+							<Typography>Export</Typography>
 						</MenuItem>
-						<MenuItem onClick={handleDelete}>
+						<MenuItem onClick={handleDelete} className="gap-1">
 							<DeleteIcon />
+							<Typography>Delete</Typography>
 						</MenuItem>
 					</Menu>
 				</div>
@@ -112,26 +121,19 @@ const SetPreview = ({ set }: { set: Set }) => {
 				open={openCardsList}
 				handleClose={handleCardsListClose}
 			/>
-			<Dialog open={openExport} onClose={handleExportClose} fullWidth>
-				<AppBar className="relative">
-					<Toolbar className="justify-between">
-						<Typography variant="h5">Exported cards</Typography>
-						<IconButton onClick={handleExportClose}>
-							<CloseIcon />
-						</IconButton>
-					</Toolbar>
-				</AppBar>
-				{exportedCards.map((card) => {
-					return <Typography key={card}>{card}</Typography>;
-				})}
-				<Button
-					className="max-w-min self-center mb-2"
-					variant="contained"
-					onClick={handleExportCopy}
-				>
-					COPY
-				</Button>
-			</Dialog>
+			<ImportExportDialog
+				open={openExport}
+				variant="export"
+				handleClose={handleExportClose}
+				setName={set.name}
+				exportedCards={exportedCards}
+			/>
+			<ImportExportDialog
+				open={openImport}
+				handleClose={handleImportClose}
+				variant="import"
+				setName={set.name}
+			/>
 			<Paper className="absolute h-full w-full z-[-1]" elevation={24} />
 		</ListItem>
 	);
