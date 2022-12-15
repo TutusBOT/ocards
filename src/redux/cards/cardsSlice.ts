@@ -8,6 +8,7 @@ export interface Set {
 }
 
 export interface FlashCard {
+	id: string;
 	front: string;
 	back: string;
 	learnedRatio: number;

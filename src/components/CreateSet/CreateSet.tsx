@@ -35,7 +35,7 @@ const CreateSet = () => {
 	const handleConfirm = () => {
 		dispatch(
 			cardsActions.addSet({
-				name: name,
+				name: name.trim(),
 				cards: [],
 				termLang: termLang,
 				defLang: defLang,

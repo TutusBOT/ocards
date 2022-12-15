@@ -15,6 +15,7 @@ import {
 import { useRef, useState } from "react";
 import { cardsActions, FlashCard } from "../../redux/cards/cardsSlice";
 import { useDispatch } from "react-redux";
+import useGenerateId from "../../hooks/useGenerateId/userGenerateId";
 
 interface CardPreview {
 	card: FlashCard;
@@ -50,6 +51,7 @@ const CardPreview = ({ card, setName }: CardPreview) => {
 				name: setName,
 				card: card,
 				editedCard: {
+					id: useGenerateId(),
 					front: term,
 					back: definition,
 					learnedRatio: card.learnedRatio,
@@ -77,17 +79,14 @@ const CardPreview = ({ card, setName }: CardPreview) => {
 						<MoreVertIcon />
 					</IconButton>
 				</div>
-				<Menu
-					open={open}
-					anchorEl={anchorEl}
-					onClose={handleMenuClose}
-					className="-ml-2"
-				>
-					<MenuItem onClick={handleEditOpen}>
+				<Menu open={open} anchorEl={anchorEl} onClose={handleMenuClose}>
+					<MenuItem onClick={handleEditOpen} className="gap-1">
 						<EditIcon />
+						<Typography>Edit</Typography>
 					</MenuItem>
-					<MenuItem onClick={handleDelete}>
+					<MenuItem onClick={handleDelete} className="gap-1">
 						<DeleteIcon />
+						<Typography>Delete</Typography>
 					</MenuItem>
 				</Menu>
 				<Dialog

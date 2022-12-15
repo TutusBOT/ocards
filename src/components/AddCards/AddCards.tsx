@@ -1,6 +1,7 @@
 import { Button, Dialog, TextField } from "@mui/material";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import useGenerateId from "../../hooks/useGenerateId/userGenerateId";
 import { cardsActions } from "../../redux/cards/cardsSlice";
 
 interface AddCards {
@@ -26,7 +27,14 @@ const AddCards = ({ setName }: AddCards) => {
 		dispatch(
 			cardsActions.addCards({
 				name: setName,
-				cards: [{ front: term, back: definition, learnedRatio: 0 }],
+				cards: [
+					{
+						id: useGenerateId(),
+						front: term.trim(),
+						back: definition.trim(),
+						learnedRatio: 0,
+					},
+				],
 			})
 		);
 		setTerm("");
