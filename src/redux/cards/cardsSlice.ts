@@ -36,6 +36,19 @@ const slice = createSlice({
 		addSet: (state, { payload }: PayloadAction<Set>) => {
 			return { sets: [...state.sets, payload] };
 		},
+		editSet: (
+			state,
+			{ payload }: PayloadAction<{ name: string; set: Set }>
+		) => {
+			return {
+				sets: state.sets.map((set) => {
+					if (set.name === payload.name) {
+						return payload.set;
+					}
+					return set;
+				}),
+			};
+		},
 		deleteSet: (state, { payload }: PayloadAction<string>) => {
 			return { sets: state.sets.filter((set) => set.name !== payload) };
 		},
@@ -59,7 +72,7 @@ const slice = createSlice({
 		},
 		deleteCard: (
 			state,
-			{ payload }: PayloadAction<{ card: FlashCard; name: string }>
+			{ payload }: PayloadAction<{ name: string; id: string }>
 		) => {
 			return {
 				sets: state.sets.map((set) => {
@@ -67,12 +80,7 @@ const slice = createSlice({
 						return {
 							...set,
 							cards: set.cards.filter((card) => {
-								if (
-									card.back !== payload.card.back ||
-									card.front !== payload.card.front
-								) {
-									return card;
-								}
+								return card.id !== payload.id;
 							}),
 						};
 					}
@@ -84,17 +92,14 @@ const slice = createSlice({
 			state,
 			{
 				payload,
-			}: PayloadAction<{ name: string; card: FlashCard; editedCard: FlashCard }>
+			}: PayloadAction<{ name: string; id: string; editedCard: FlashCard }>
 		) => {
 			return {
 				...state,
 				sets: state.sets.map((set) => {
 					if (set.name === payload.name) {
 						const cards = set.cards.map((card) => {
-							if (
-								card.back === payload.card.back &&
-								card.front === payload.card.front
-							) {
+							if (card.id === payload.id) {
 								return payload.editedCard;
 							}
 							return card;
@@ -114,18 +119,15 @@ const slice = createSlice({
 export const cardsActions = {
 	addSet: createAction<Set>("cards/addSet"),
 	deleteSet: createAction<string>("cards/deleteSet"),
+	editSet: createAction<{ name: string; set: Set }>("cards/editSet"),
 	addCards: createAction<{
 		name: string;
 		cards: Array<FlashCard>;
 	}>("cards/addCards"),
-	deleteCard: createAction<{ card: FlashCard; name: string }>(
-		"cards/deleteCard"
+	deleteCard: createAction<{ name: string; id: string }>("cards/deleteCard"),
+	editCard: createAction<{ name: string; id: string; editedCard: FlashCard }>(
+		"cards/editCard"
 	),
-	editCard: createAction<{
-		name: string;
-		card: FlashCard;
-		editedCard: FlashCard;
-	}>("cards/editCard"),
 	reset: createAction("cards/reset"),
 };
 
