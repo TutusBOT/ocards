@@ -15,7 +15,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import PublishIcon from "@mui/icons-material/Publish";
 import { useDispatch } from "react-redux";
 import React, { useState } from "react";
-import { CardsList, ImportExportDialog, Practice } from "../index";
+import { CardsList, EditSet, ImportExportDialog, Practice } from "../index";
 import Typography from "@mui/material/Typography";
 
 const SetPreview = ({ set }: { set: Set }) => {
@@ -23,6 +23,7 @@ const SetPreview = ({ set }: { set: Set }) => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const [openCardsList, setOpenCardsList] = useState(false);
+	const [openEdit, setOpenEdit] = useState(false);
 	const [openExport, setOpenExport] = useState(false);
 	const [exportedCards, setExportedCards] = useState<string[]>([]);
 	const [openImport, setOpenImport] = useState(false);
@@ -40,12 +41,22 @@ const SetPreview = ({ set }: { set: Set }) => {
 		dispatch(cardsActions.deleteSet(set.name));
 	};
 
+	const handleEditOpen = () => {
+		setOpenEdit(true);
+	};
+
+	const handleEditClose = () => {
+		setOpenEdit(false);
+		handleMenuClose();
+	};
+
 	const handleImportOpen = () => {
 		setOpenImport(true);
 	};
 
 	const handleImportClose = () => {
 		setOpenImport(false);
+		handleMenuClose();
 	};
 
 	const handleExportOpen = () => {
@@ -58,10 +69,6 @@ const SetPreview = ({ set }: { set: Set }) => {
 
 	const handleExportClose = () => {
 		setOpenExport(false);
-		handleMenuClose();
-	};
-
-	const handleEdit = () => {
 		handleMenuClose();
 	};
 
@@ -85,17 +92,12 @@ const SetPreview = ({ set }: { set: Set }) => {
 					<IconButton onClick={handleMenuClick}>
 						<MoreVertIcon />
 					</IconButton>
-					<Menu
-						anchorEl={anchorEl}
-						open={open}
-						onClose={handleMenuClose}
-						className="-ml-2"
-					>
+					<Menu anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
 						<MenuItem onClick={handleCardsListClick} className="gap-1">
 							<AddCircleOutlineIcon />
 							<Typography>Add</Typography>
 						</MenuItem>
-						<MenuItem onClick={handleEdit} className="gap-1">
+						<MenuItem onClick={handleEditOpen} className="gap-1">
 							<EditIcon />
 							<Typography>Edit</Typography>
 						</MenuItem>
@@ -120,6 +122,11 @@ const SetPreview = ({ set }: { set: Set }) => {
 				setName={set.name}
 				open={openCardsList}
 				handleClose={handleCardsListClose}
+			/>
+			<EditSet
+				cardSetName={set.name}
+				handleClose={handleEditClose}
+				open={openEdit}
 			/>
 			<ImportExportDialog
 				open={openExport}
