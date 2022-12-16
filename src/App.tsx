@@ -4,14 +4,12 @@ import {
 	ThemeProvider,
 } from "@mui/material";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import "./App.css";
 import Test from "./components/test";
 import { grey } from "@mui/material/colors";
 import { CreateSet, SetList } from "./components";
 
 function App() {
-	const dispatch = useDispatch();
 	const [image, setImage] = useState<any>();
 
 	const theme = createTheme({

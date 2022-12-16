@@ -15,7 +15,6 @@ import {
 import { useRef, useState } from "react";
 import { cardsActions, FlashCard } from "../../redux/cards/cardsSlice";
 import { useDispatch } from "react-redux";
-import useGenerateId from "../../hooks/useGenerateId/userGenerateId";
 
 interface CardPreview {
 	card: FlashCard;
@@ -40,7 +39,7 @@ const CardPreview = ({ card, setName }: CardPreview) => {
 	};
 
 	const handleDelete = () => {
-		dispatch(cardsActions.deleteCard({ card: card, name: setName }));
+		dispatch(cardsActions.deleteCard({ name: setName, id: card.id }));
 		handleEditClose();
 		handleMenuClose();
 	};
@@ -49,15 +48,16 @@ const CardPreview = ({ card, setName }: CardPreview) => {
 		dispatch(
 			cardsActions.editCard({
 				name: setName,
-				card: card,
+				id: card.id,
 				editedCard: {
-					id: useGenerateId(),
+					id: card.id,
 					front: term,
 					back: definition,
 					learnedRatio: card.learnedRatio,
 				},
 			})
 		);
+		handleEditClose();
 	};
 
 	const handleEditOpen = () => {
