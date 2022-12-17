@@ -59,7 +59,7 @@ const CardsList = ({ setName, open, handleClose }: CardsList) => {
 					</IconButton>
 				</Toolbar>
 			</AppBar>
-			<Grid container spacing={2}>
+			<Grid container spacing={2} className="px-4 pt-4">
 				{filteredCards.map((card, i) => {
 					return (
 						<Grid item xs={12} sm={6} md={4} key={i}>

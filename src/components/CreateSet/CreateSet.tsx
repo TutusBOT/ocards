@@ -46,7 +46,7 @@ const CreateSet = () => {
 
 	return (
 		<>
-			<Button variant="contained" onClick={handleOpen}>
+			<Button color="secondary" variant="contained" onClick={handleOpen}>
 				CREATE SET
 			</Button>
 			<Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">

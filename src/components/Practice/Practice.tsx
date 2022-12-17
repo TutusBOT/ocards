@@ -95,7 +95,9 @@ const Practice = ({ setName }: Practice) => {
 
 	return (
 		<>
-			<Button onClick={handleOpen}>REVIEW</Button>
+			<Button variant="contained" color="primary" onClick={handleOpen}>
+				<Typography>REVIEW</Typography>
+			</Button>
 			<Dialog
 				open={open}
 				fullScreen

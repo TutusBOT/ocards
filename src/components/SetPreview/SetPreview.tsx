@@ -88,7 +88,9 @@ const SetPreview = ({ set }: { set: Set }) => {
 			></div>
 			<ListItemText className="w-full">
 				<div className="flex justify-between items-center w-full">
-					<Typography variant="h5">{set.name}</Typography>
+					<Typography color="primary.light" variant="h5">
+						{set.name}
+					</Typography>
 					<IconButton onClick={handleMenuClick}>
 						<MoreVertIcon />
 					</IconButton>
@@ -116,7 +118,11 @@ const SetPreview = ({ set }: { set: Set }) => {
 					</Menu>
 				</div>
 			</ListItemText>
-			<ListItemText>{set.cards.length} cards in set</ListItemText>
+			<ListItemText>
+				<Typography color="primary.light">
+					{set.cards.length} cards in set
+				</Typography>
+			</ListItemText>
 			<Practice setName={set.name} />
 			<CardsList
 				setName={set.name}
