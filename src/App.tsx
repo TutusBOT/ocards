@@ -6,23 +6,11 @@ import {
 import { useState } from "react";
 import "./App.css";
 import Test from "./components/test";
-import { grey } from "@mui/material/colors";
 import { CreateSet, SetList } from "./components";
+import { theme } from "./theme";
 
 function App() {
 	const [image, setImage] = useState<any>();
-
-	const theme = createTheme({
-		palette: {
-			mode: "dark",
-			primary: {
-				main: grey[500],
-			},
-			secondary: {
-				main: grey[100],
-			},
-		},
-	});
 
 	return (
 		<StyledEngineProvider injectFirst>
