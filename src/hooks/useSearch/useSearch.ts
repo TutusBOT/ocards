@@ -1,5 +1,5 @@
 const useSearch = (
-	array: Array<any>,
+	array: Array<{ [key: string]: string | number }>,
 	value: string,
 	excludedKeys: string[] = []
 ) => {
