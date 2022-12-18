@@ -8,6 +8,7 @@ import SearchBar from "./CardsSearchBar/CardsSearchBar";
 import Practice from "./Practice/Practice";
 import ImportExportDialog from "./ImportExportDialog/ImportExportDialog";
 import EditSet from "./EditSet/EditSet";
+import Camera from "./Camera/Camera";
 
 export {
 	CreateSet,
@@ -20,4 +21,5 @@ export {
 	Practice,
 	ImportExportDialog,
 	EditSet,
+	Camera,
 };
