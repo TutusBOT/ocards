@@ -6,7 +6,6 @@ import { cardsActions } from "../../redux/cards/cardsSlice";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import PanToolIcon from "@mui/icons-material/PanTool";
 import { RootState } from "../../redux/store";
-import { createWorker, ImageLike } from "tesseract.js";
 import useImageReader from "../../hooks/useImageReader/useImageReader";
 
 interface AddCards {
@@ -72,10 +71,18 @@ const AddCards = ({ setName }: AddCards) => {
 		const reader = new FileReader();
 		if (e.target.files) {
 			reader.readAsDataURL(e.target.files[0]);
-			reader.onload = (e) => {
+			reader.onload = async (e) => {
 				setImage(e.target?.result);
-				if (typeof e.target?.result === "string")
-					useImageReader(e.target.result);
+				if (typeof e.target?.result === "string") {
+					const text = await useImageReader(e.target.result);
+					console.log(
+						text
+							.split("\n")
+							.filter((t) => t)
+							.map((t) => t.split(/-/))
+							.flat()
+					);
+				}
 			};
 		}
 	};

@@ -11,8 +11,8 @@ const imageReader = async (file: ImageLike) => {
 	const {
 		data: { text },
 	} = await worker.recognize(file);
-	console.log(text);
 	worker.terminate;
+	return text;
 };
 
 export default imageReader;
