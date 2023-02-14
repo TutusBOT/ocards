@@ -10,9 +10,9 @@ const SetList = () => {
 
 	return (
 		<List>
-			{sets.map((set, i) => (
-				<SetPreview set={set} key={i} />
-			))}
+			{sets.length
+				? sets.map((set, i) => <SetPreview set={set} key={i} />)
+				: null}
 		</List>
 	);
 };

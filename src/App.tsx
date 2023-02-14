@@ -1,21 +1,13 @@
-import {
-	createTheme,
-	StyledEngineProvider,
-	ThemeProvider,
-} from "@mui/material";
-import { useState } from "react";
+import { StyledEngineProvider, ThemeProvider } from "@mui/material";
 import "./App.css";
-import Test from "./components/test";
 import { CreateSet, SetList } from "./components";
 import { theme } from "./theme";
 
 function App() {
-	const [image, setImage] = useState<any>();
-
 	return (
 		<StyledEngineProvider injectFirst>
 			<ThemeProvider theme={theme}>
-				<Test file={image} />
+				<div className="w-screen h-screen fixed bg-gray-500 top-0 left-0"></div>
 				<SetList />
 				<CreateSet />
 			</ThemeProvider>
