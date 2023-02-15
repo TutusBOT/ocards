@@ -9,6 +9,7 @@ import Practice from "./Practice/Practice";
 import ImportExportDialog from "./ImportExportDialog/ImportExportDialog";
 import EditSet from "./EditSet/EditSet";
 import Camera from "./Camera/Camera";
+import Hero from "./Hero/Hero";
 
 export {
 	CreateSet,
@@ -22,4 +23,5 @@ export {
 	ImportExportDialog,
 	EditSet,
 	Camera,
+	Hero,
 };
