@@ -9,7 +9,7 @@ const SetList = () => {
 	);
 
 	return (
-		<List>
+		<List className="flex flex-wrap gap-6">
 			{sets.length
 				? sets.map((set, i) => <SetPreview set={set} key={i} />)
 				: null}
