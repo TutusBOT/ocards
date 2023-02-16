@@ -105,7 +105,8 @@ const Practice = ({ setName }: Practice) => {
 				onClose={handleClose}
 			>
 				<AppBar className="relative">
-					<Toolbar className="justify-end">
+					<Toolbar className="justify-between">
+						<Typography variant="h5">Reviewing {set.name}</Typography>
 						<IconButton onClick={handleClose}>
 							<CloseIcon />
 						</IconButton>
@@ -148,7 +149,7 @@ const Practice = ({ setName }: Practice) => {
 								}
 							/>
 						</Grid>
-						<Grid item sm={12}>
+						<Grid item sm={12} className="w-full justify-self-center">
 							{!isAnswered ? (
 								<>
 									<Button variant="outlined" onClick={handleShowAnswer}>
