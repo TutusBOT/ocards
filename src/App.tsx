@@ -7,10 +7,10 @@ function App() {
 	return (
 		<StyledEngineProvider injectFirst>
 			<ThemeProvider theme={theme}>
-				<div className="w-screen h-screen fixed bg-gray-500 top-0 left-0 -z-50"></div>
+				<div className="w-screen h-screen fixed bg-gray-300 top-0 left-0 -z-50"></div>
 				<Hero />
-				<SetList />
 				<CreateSet />
+				<SetList />
 			</ThemeProvider>
 		</StyledEngineProvider>
 	);
