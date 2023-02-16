@@ -1,12 +1,20 @@
-import { Button, Dialog, Skeleton, TextField, Typography } from "@mui/material";
+import {
+	Button,
+	Dialog,
+	List,
+	ListItem,
+	Skeleton,
+	TextField,
+	Typography,
+} from "@mui/material";
 import { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import useGenerateId from "../../hooks/useGenerateId/userGenerateId";
-import { cardsActions } from "../../redux/cards/cardsSlice";
+import { cardsActions, FlashCard } from "../../redux/cards/cardsSlice";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import PanToolIcon from "@mui/icons-material/PanTool";
-import { RootState } from "../../redux/store";
 import useImageReader from "../../hooks/useImageReader/useImageReader";
+import Chip from "@mui/material/Chip";
 
 interface AddCards {
 	setName: string;
@@ -16,9 +24,6 @@ const DIALOG_ANIMATION_TIME = 160;
 
 const AddCards = ({ setName }: AddCards) => {
 	const dispatch = useDispatch();
-	const [set] = useSelector((state: RootState) =>
-		state.persistedReducer.cards.sets.filter((set) => set.name === setName)
-	);
 
 	const [open, setOpen] = useState(false);
 	const [additionType, setAdditionType] = useState<"hand" | "photo" | null>(
@@ -29,7 +34,11 @@ const AddCards = ({ setName }: AddCards) => {
 	const [image, setImage] = useState<string | ArrayBuffer | null | undefined>(
 		null
 	);
-	const [separator, setSeparator] = useState("-");
+	const [separator, setSeparator] = useState("");
+	const [separators, setSeparators] = useState(["-"]);
+	const [photoCards, setPhotoCards] = useState<FlashCard[] | "loading" | null>(
+		null
+	);
 	const addCardRef = useRef<HTMLInputElement>(null);
 
 	const handleType = (type: "hand" | "photo") => {
@@ -70,21 +79,32 @@ const AddCards = ({ setName }: AddCards) => {
 	const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const reader = new FileReader();
 		if (e.target.files) {
+			setPhotoCards("loading");
 			reader.readAsDataURL(e.target.files[0]);
 			reader.onload = async (e) => {
 				setImage(e.target?.result);
 				if (typeof e.target?.result === "string") {
-					const text = await useImageReader(e.target.result);
-					console.log(
-						text
-							.split("\n")
-							.filter((t) => t)
-							.map((t) => t.split(/-/))
-							.flat()
-					);
+					const wordsArray = await useImageReader({
+						file: e.target.result,
+						separators: separators,
+					});
+					const cards: FlashCard[] = [];
+					for (let i = 0; i < wordsArray.length; i += 2) {
+						cards.push({
+							front: wordsArray[i],
+							back: wordsArray[i + 1],
+							learnedRatio: 0,
+							id: useGenerateId(),
+						});
+					}
+					setPhotoCards(cards);
 				}
 			};
 		}
+	};
+
+	const deleteSeparator = (s: string) => {
+		setSeparators(separators.filter((separator) => separator !== s));
 	};
 
 	return (
@@ -122,12 +142,51 @@ const AddCards = ({ setName }: AddCards) => {
 									<Skeleton variant="rounded" width="20rem" height="20rem" />
 								)}
 							</div>
-							<TextField
-								className="w-60 self-center"
-								label="Term and definition separator"
-								value={separator}
-								onChange={(e) => setSeparator(e.target.value)}
-							/>
+
+							{photoCards == null && (
+								<div className="flex w-full justify-center gap-4">
+									<TextField
+										className="w-60"
+										label="Term and definition separator"
+										value={separator}
+										onChange={(e) => setSeparator(e.target.value)}
+									/>
+									<Button
+										variant="outlined"
+										onClick={() => {
+											setSeparators([...separators, separator]);
+											setSeparator("");
+										}}
+									>
+										ADD
+									</Button>
+								</div>
+							)}
+
+							{photoCards === "loading" && <div>Loading</div>}
+
+							{photoCards && photoCards !== "loading" && (
+								<List>
+									{photoCards.map((card) => (
+										<ListItem key={card.id}>
+											{card.front} {card.back}
+										</ListItem>
+									))}
+								</List>
+							)}
+
+							<List className="flex justify-center gap-2">
+								{separators.map((s) => {
+									return (
+										<Chip
+											key={s}
+											variant="filled"
+											label={s}
+											onDelete={() => deleteSeparator(s)}
+										/>
+									);
+								})}
+							</List>
 							<div className="flex justify-center gap-2">
 								<Button color="secondary" variant="contained">
 									<label htmlFor="flashcards" className="cursor-pointer">
