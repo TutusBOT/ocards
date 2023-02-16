@@ -4,7 +4,12 @@ const worker = createWorker({
 	logger: (m) => console.log(m),
 });
 
-const imageReader = async (file: ImageLike) => {
+interface imageReader {
+	file: ImageLike;
+	separators: string[];
+}
+
+const imageReader = async ({ file, separators }: imageReader) => {
 	await worker.load();
 	await worker.loadLanguage("eng+pol");
 	await worker.initialize("eng+pol");
@@ -12,7 +17,13 @@ const imageReader = async (file: ImageLike) => {
 		data: { text },
 	} = await worker.recognize(file);
 	worker.terminate;
-	return text;
+	let array = text.split("\n").filter((t) => t);
+
+	separators.forEach((separator) => {
+		array = array.map((card) => card.split(separator)).flat();
+	});
+
+	return array.map((text) => text.trim());
 };
 
 export default imageReader;
