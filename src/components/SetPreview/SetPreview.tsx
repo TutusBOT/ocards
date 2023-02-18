@@ -81,7 +81,7 @@ const SetPreview = ({ set }: { set: Set }) => {
 	};
 
 	return (
-		<ListItem className="flex-col">
+		<ListItem className="flex-col max-w-xl">
 			<div
 				className="absolute h-full w-full cursor-pointer"
 				onClick={handleCardsListClick}
