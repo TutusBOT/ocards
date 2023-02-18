@@ -10,6 +10,7 @@ import ImportExportDialog from "./ImportExportDialog/ImportExportDialog";
 import EditSet from "./EditSet/EditSet";
 import Camera from "./Camera/Camera";
 import Hero from "./Hero/Hero";
+import NavBar from "./NavBar/NavBar";
 
 export {
 	CreateSet,
@@ -24,4 +25,5 @@ export {
 	EditSet,
 	Camera,
 	Hero,
+	NavBar,
 };
