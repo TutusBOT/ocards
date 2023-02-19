@@ -54,6 +54,9 @@ const AddCards = ({ setName }: AddCards) => {
 		setTimeout(() => {
 			setImage(null);
 			setAdditionType(null);
+			setSeparators(["-"]);
+			setSeparator("");
+			setPhotoCards(null);
 		}, DIALOG_ANIMATION_TIME);
 	};
 
