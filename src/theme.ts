@@ -1,16 +1,16 @@
 import { createTheme } from "@mui/material";
-import { deepPurple, grey } from "@mui/material/colors";
+import { blue, deepPurple, grey } from "@mui/material/colors";
 
 export const theme = createTheme({
 	palette: {
 		mode: "dark",
 		primary: {
-			light: grey[200],
-			main: grey[300],
+			light: grey[100],
+			main: grey[200],
 		},
 		secondary: {
-			main: deepPurple["800"],
-			light: deepPurple["600"],
+			main: blue["800"],
+			light: blue["600"],
 		},
 	},
 });
