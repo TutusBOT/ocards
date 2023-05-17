@@ -2,8 +2,11 @@ import { Typography, Box, Link } from "@mui/material";
 
 const Hero = () => {
 	return (
-		<Box className="w-full h-screen py-4 flex gap-4">
-			<div className="flex gap-4 flex-col w-1/2">
+		<Box
+			className="w-full h-screen py-4 flex gap-4 items-center justify-center"
+			id="home"
+		>
+			<div className="flex gap-4 flex-col">
 				<Typography variant="h3" color="secondary" className="font-semibold">
 					A faster way to create and study flashcards.
 				</Typography>
@@ -21,7 +24,6 @@ const Hero = () => {
 					functional flashcards that you can edit and study.
 				</Typography>
 			</div>
-			<div className="w-1/2"></div>
 		</Box>
 	);
 };
