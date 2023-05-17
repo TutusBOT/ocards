@@ -2,10 +2,12 @@ import { Link, Typography } from "@mui/material";
 
 const NavBar = () => {
 	return (
-		<header className="w-full">
-			<nav className="w-full flex justify-between">
-				<Typography variant="h5">OCaRds</Typography>
-				<div className="flex gap-2 sm:gap-4">
+		<header className="w-full fixed top-0 left-0 shadow-lg">
+			<nav className="w-full flex justify-between bg-slate-50 py-4">
+				<Typography variant="h5" className="pl-4">
+					OCaRds
+				</Typography>
+				<div className="flex gap-2 sm:gap-4 pr-4">
 					<Link variant="h5" href="#home" color="secondary.light">
 						HOME
 					</Link>
