@@ -2,7 +2,6 @@ import {
 	Button,
 	Dialog,
 	List,
-	ListItem,
 	Skeleton,
 	TextField,
 	Typography,
@@ -15,12 +14,14 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import PanToolIcon from "@mui/icons-material/PanTool";
 import useImageReader from "../../hooks/useImageReader/useImageReader";
 import Chip from "@mui/material/Chip";
+import PhotoCardsList from "./PhotoCardsList";
 
 interface AddCards {
 	setName: string;
 }
 
 const DIALOG_ANIMATION_TIME = 160;
+const DEFAULT_SEPARATOR = " - ";
 
 const AddCards = ({ setName }: AddCards) => {
 	const dispatch = useDispatch();
@@ -35,7 +36,7 @@ const AddCards = ({ setName }: AddCards) => {
 		null
 	);
 	const [separator, setSeparator] = useState("");
-	const [separators, setSeparators] = useState(["-"]);
+	const [separators, setSeparators] = useState([DEFAULT_SEPARATOR]);
 	const [photoCards, setPhotoCards] = useState<FlashCard[] | "loading" | null>(
 		null
 	);
@@ -54,7 +55,7 @@ const AddCards = ({ setName }: AddCards) => {
 		setTimeout(() => {
 			setImage(null);
 			setAdditionType(null);
-			setSeparators(["-"]);
+			setSeparators([DEFAULT_SEPARATOR]);
 			setSeparator("");
 			setPhotoCards(null);
 		}, DIALOG_ANIMATION_TIME);
@@ -104,6 +105,17 @@ const AddCards = ({ setName }: AddCards) => {
 				}
 			};
 		}
+	};
+
+	const handleAddByPhoto = () => {
+		if (!photoCards || photoCards === "loading") return;
+		dispatch(
+			cardsActions.addCards({
+				name: setName,
+				cards: photoCards,
+			})
+		);
+		handleClose();
 	};
 
 	const deleteSeparator = (s: string) => {
@@ -169,13 +181,10 @@ const AddCards = ({ setName }: AddCards) => {
 							{photoCards === "loading" && <div>Loading</div>}
 
 							{photoCards && photoCards !== "loading" && (
-								<List>
-									{photoCards.map((card) => (
-										<ListItem key={card.id}>
-											{card.front} {card.back}
-										</ListItem>
-									))}
-								</List>
+								<PhotoCardsList
+									photoCards={photoCards}
+									setPhotoCards={setPhotoCards}
+								/>
 							)}
 
 							<List className="flex justify-center gap-2">
@@ -199,8 +208,12 @@ const AddCards = ({ setName }: AddCards) => {
 									</label>
 								</Button>
 								{image && (
-									<Button color="primary" variant="contained">
-										NEXT
+									<Button
+										color="primary"
+										variant="contained"
+										onClick={handleAddByPhoto}
+									>
+										ADD
 									</Button>
 								)}
 								<input
