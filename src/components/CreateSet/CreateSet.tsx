@@ -46,17 +46,22 @@ const CreateSet = () => {
 
 	return (
 		<>
-			<Button color="secondary" variant="contained" onClick={handleOpen}>
+			<Button
+				color="secondary"
+				variant="contained"
+				onClick={handleOpen}
+				id="cards"
+			>
 				CREATE SET
 			</Button>
 			<Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
 				<div className="flex flex-col gap-4 p-4">
 					<div className="flex justify-between">
-						<IconButton onClick={handleClose}>
-							<Close />
-						</IconButton>
 						<IconButton onClick={handleConfirm}>
 							<Check />
+						</IconButton>
+						<IconButton onClick={handleClose}>
+							<Close />
 						</IconButton>
 					</div>
 					<TextField
