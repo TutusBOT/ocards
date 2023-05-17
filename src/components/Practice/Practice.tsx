@@ -121,7 +121,11 @@ const Practice = ({ setName }: Practice) => {
 						alignContent="center"
 					>
 						<Grid item sm={12}>
-							<Typography variant="h4" align="center" className=" break-all">
+							<Typography
+								variant="h4"
+								align="center"
+								className=" break-all pt-4"
+							>
 								{reviewSet.length ? reviewSet[0].front : null}
 							</Typography>
 						</Grid>
@@ -134,7 +138,7 @@ const Practice = ({ setName }: Practice) => {
 								{reviewSet.length ? reviewSet[0].back : null}
 							</Typography>
 						</Grid>
-						<Grid item sm={12}>
+						<Grid item sm={12} className="flex justify-center items-center">
 							<TextField
 								variant="outlined"
 								value={answer}
@@ -149,7 +153,11 @@ const Practice = ({ setName }: Practice) => {
 								}
 							/>
 						</Grid>
-						<Grid item sm={12} className="w-full justify-self-center">
+						<Grid
+							item
+							sm={12}
+							className="w-full justify-self-center flex justify-center items-center gap-4"
+						>
 							{!isAnswered ? (
 								<>
 									<Button variant="outlined" onClick={handleShowAnswer}>
