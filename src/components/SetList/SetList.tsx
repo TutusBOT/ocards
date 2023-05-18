@@ -9,7 +9,7 @@ const SetList = () => {
 	);
 
 	return (
-		<List className="flex flex-wrap justify-center gap-6">
+		<List className="flex flex-wrap justify-center gap-6 py-8">
 			{sets.length
 				? sets.map((set, i) => <SetPreview set={set} key={i} />)
 				: null}
