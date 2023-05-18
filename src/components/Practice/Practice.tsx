@@ -112,7 +112,7 @@ const Practice = ({ setName }: Practice) => {
 						</IconButton>
 					</Toolbar>
 				</AppBar>
-				<Card className=" h-full bg-purple-900 m-4">
+				<Card className=" h-full bg-zinc-700 m-4">
 					<Grid
 						container
 						spacing={4}
@@ -161,7 +161,7 @@ const Practice = ({ setName }: Practice) => {
 							{!isAnswered ? (
 								<>
 									<Button variant="outlined" onClick={handleShowAnswer}>
-										SHOW ANSWER
+										{showAnswer ? "HIDE ANSWER" : "SHOW ANSWER"}
 									</Button>
 									<Button variant="contained" onClick={handleGuess}>
 										SUBMIT
