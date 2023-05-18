@@ -1,7 +1,6 @@
 import { StyledEngineProvider, ThemeProvider } from "@mui/material";
 import "./App.css";
 import { CreateSet, Hero, SetList, NavBar } from "./components";
-import Card from "./components/Card/Card";
 import { theme } from "./theme";
 
 function App() {
@@ -13,7 +12,6 @@ function App() {
 				<Hero />
 				<CreateSet />
 				<SetList />
-				<Card term="hello" definition="world" />
 			</ThemeProvider>
 		</StyledEngineProvider>
 	);
