@@ -2,17 +2,30 @@ import { Input } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import React, { useEffect, useState } from "react";
 import { FlashCard } from "../../redux/cards/cardsSlice";
-import useSearch from "../../hooks/useSearch/useSearch";
 
 interface CardsSearchBar {
 	data: FlashCard[];
 	setFilteredData: (filteredArray: FlashCard[]) => void;
 }
 
+const handleSearch = (
+	cards: FlashCard[],
+	searchedValue: string,
+	setFilteredData: (value: FlashCard[]) => void
+) => {
+	const filteredArray = cards.filter((card) => {
+		return (
+			card.front.toLowerCase().startsWith(searchedValue.toLowerCase()) ||
+			card.back.toLowerCase().startsWith(searchedValue.toLowerCase())
+		);
+	});
+	setFilteredData(filteredArray);
+};
+
 const CardsSearchBar = ({ data, setFilteredData }: CardsSearchBar) => {
 	const [value, setValue] = useState("");
 	useEffect(() => {
-		setFilteredData(useSearch(data, value, ["learnedRatio"]));
+		handleSearch(data, value, setFilteredData);
 	}, [value]);
 
 	const handleChange = (
