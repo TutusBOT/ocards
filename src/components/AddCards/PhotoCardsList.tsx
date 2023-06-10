@@ -21,14 +21,14 @@ const PhotoCardsList = ({ photoCards, setPhotoCards }: PhotoCardsListProps) => {
 	return (
 		<List>
 			{photoCards.map((card) => (
-				<ListItem key={card.id} className="grid grid-cols-3">
+				<ListItem key={card.id} className="grid grid-cols-[1fr_1fr_64px]">
 					<div>
 						Term: <strong>{card.front}</strong>
 					</div>
 					<div>
 						Definition: <strong>{card.back}</strong>
 					</div>
-					<div>
+					<div className="w-4">
 						<Button onClick={() => handleDelete(card)}>
 							<DeleteIcon />
 						</Button>
