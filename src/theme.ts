@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material";
-import { blue, deepPurple, grey } from "@mui/material/colors";
+import { blue, grey } from "@mui/material/colors";
 
 export const theme = createTheme({
 	palette: {
@@ -9,8 +9,8 @@ export const theme = createTheme({
 			main: grey[200],
 		},
 		secondary: {
-			main: blue["800"],
-			light: blue["600"],
+			main: blue["600"],
+			light: blue["400"],
 		},
 	},
 });
